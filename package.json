@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/Jack-Thorn965/flingman-alevel-project/issues"
   },
-  "homepage": "https://github.com/Jack-Thorn965/flingman-alevel-project#readme"
+  "homepage": "https://github.com/Jack-Thorn965/flingman-alevel-project#readme",
+  "dependencies": {
+    "p5": "^1.3.1"
+  }
 }
