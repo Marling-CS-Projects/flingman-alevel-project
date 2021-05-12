@@ -7,11 +7,13 @@
     <title>Document</title>
     <script src="js/pixi.min.js"></script>
     <script>
+        
     let app;
     let player;
     let keys = {};
     let keysDiv;
 
+// on load, create canvas
     window.onload = function() {
         app = new PIXI.Application(
             {
@@ -30,6 +32,11 @@
         player.y = app.view.height / 2;
 
         app.stage.addChild(player);
+
+
+        // mouse interactivity
+        app.stage.interactive = true;
+        app.stage.on("pointermove", movePlayer)
         
         // Keyboard event handling
         window.addEventListener("keydown", keysDown );
@@ -39,6 +46,17 @@
 
         keysDiv = document.querySelector("#keys")
     }     
+
+    // moving using the mouse
+    function movePlayer(e) {
+        let pos = e.data.global;
+
+        player.x = pos.x;
+        player.y = pos.y;
+
+    }
+
+    // checking for key press/release
     
     function keysDown(e) {
         keys[e.keyCode] = true
@@ -52,7 +70,9 @@
 
     // Checking each frame
     function gameLoop() {
-        keysDiv.innerHTML = JSON.stringify(keys);  
+        keysDiv.innerHTML = JSON.stringify(keys); 
+        
+    // Moving player using keyboard
 
         // W
         if (keys["87"]) {
