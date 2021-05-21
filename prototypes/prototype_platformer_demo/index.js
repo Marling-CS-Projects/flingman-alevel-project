@@ -6,6 +6,7 @@ const app = new PIXI.Application({
 });
 
 const tileSize = 16;
+const SCALE = 2;
 
 let map = {
     width: 16,
@@ -15,18 +16,64 @@ let map = {
         12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12,
         12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12,
         12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12,
+        12, 12, 12, 12, 12, 12, 12, 12, 12, 3, 4, 5, 12, 12, 12, 12,
         12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12,
-        12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12,
-        12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12,
-        12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12,
+        12, 12, 12, 12, 12, 12, 12, 13, 12, 12, 12, 12, 12, 12, 12, 12,
+        12, 12, 12, 12, 12, 12, 12, 13, 12, 12, 12, 12, 12, 12, 12, 12,
         1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
         8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8,
+    ],
+    collision: [
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 4, 5, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
     ]
 }
 
-document.body.appendChild(app.view);
+function testCollision(worldX, worldY) {
+    console.log(worldX)
+    console.log(worldy)
+    let mapX = Math.floor(worldX / tileSize / SCALE);
+    let mapY = Math.floor(worldY /tileSize /  SCALE);
+    return map.collision[mapY * map.width + mapX];
+}
 
-app.loader.add('tileset', 'assets/tileset.png').load((loader, resources) => {
+class Keyboard {
+    constructor  () {
+        this.pressed = {};
+    }
+
+    watchKeyboard (el) {
+
+        el.addEventListener('keydown', (e) => {
+            console.log(e.key);
+            this.pressed[e.key] = true;
+        });
+        el.addEventListener('keyup', (e) => {
+            this.pressed[e.key] = false;
+        });
+    }
+}
+
+document.body.appendChild(app.view);
+app.view.setAttribute('tabindex', 0);
+
+
+
+app.loader.add('tileset', 'assets/tileset.png')
+app.loader.add('player_character', 'assets/player.png')
+app.loader.load((loader, resources) => {
+
+    let kb = new Keyboard();
+    kb.watchKeyboard(app.view);
+
 
     let tileTextures = [];
     for (let i = 0; i < 7 * 11; i++) {
@@ -39,16 +86,18 @@ app.loader.add('tileset', 'assets/tileset.png').load((loader, resources) => {
     }
 
 
-    const bunny = new PIXI.Sprite(tileTextures[52]);
-    bunny.scale.x = 4;
-    bunny.scale.y = 4;
+    const player = new PIXI.Sprite.from("assets/player.png");
+    player.scale.x = SCALE;
+    player.scale.y = SCALE;
 
 
 
-    bunny.x = app.renderer.width / 2;
-    bunny.y = app.renderer.height / 2;
+    player.x = app.renderer.width / 2;
+    player.y = app.renderer.height / 2;
 
-    
+
+
+    let sky = new PIXI.TilingSprite(tileTextures[74], map.width * tileSize, map.height * tileSize);
     let background = new PIXI.Container();
     for (let y = 0; y < map.width; y++) {
         for (let x = 0; x < map .width; x++) {
@@ -59,18 +108,50 @@ app.loader.add('tileset', 'assets/tileset.png').load((loader, resources) => {
             background.addChild(sprite);
         }
     }
+    sky.scale.x = sky.scale.y = SCALE;
+    background.scale.x = SCALE;
+    background.scale.y = SCALE;
 
-    background.scale.x = 2;
-    background.scale.y = 2;
 
-
-    bunny.anchor.x = 0.5;
-    bunny.anchor.y = 0.5;
-
+    app.stage.addChild(sky);
     app.stage.addChild(background);
+    app.stage.addChild(player);
+
+    let character = {
+        x: 0, y:     0,
+        vx: 0, vy: 0
+    };
 
     app.ticker.add(() => {
-        bunny.rotation += 0.01
+        player.x = character.x;
+        player.y = character.y;
+
+        character.vy = character.vy + 1;
+        character.x += character.vx;   
+        
+        if (character.vy > 0) {
+            for (let i = 0; i < character.vy; i++) {
+                let testX1 = character.x;
+                let testX2 = character.x + tileSize * SCALE -1;
+                let testY = character.y + tileSize * SCALE * 2
+                if (testCollision(testX1, testY) || testCollision(testX2, testY)) {
+                    character.vy = 0;
+                    break;  
+                }       
+                character.y = character.y + 1;
+            }
+        }
+
+        if (character.vy < 0) {
+            character.y += character.vy;
+        }
+
+
+        if (kb.pressed.ArrowUp) {
+            character.vy = -10;
+        }
+
+
     });
 });
 
