@@ -39,7 +39,7 @@ let map = {
 
 function testCollision(worldX, worldY) {
     console.log(worldX)
-    console.log(worldy)
+    console.log(worldY)
     let mapX = Math.floor(worldX / tileSize / SCALE);
     let mapY = Math.floor(worldY /tileSize /  SCALE);
     return map.collision[mapY * map.width + mapX];
@@ -53,7 +53,6 @@ class Keyboard {
     watchKeyboard (el) {
 
         el.addEventListener('keydown', (e) => {
-            console.log(e.key);
             this.pressed[e.key] = true;
         });
         el.addEventListener('keyup', (e) => {
@@ -92,8 +91,7 @@ app.loader.load((loader, resources) => {
 
 
 
-    player.x = app.renderer.width / 2;
-    player.y = app.renderer.height / 2;
+    
 
 
 
@@ -118,7 +116,7 @@ app.loader.load((loader, resources) => {
     app.stage.addChild(player);
 
     let character = {
-        x: 0, y:     0,
+        x: 0, y: 0,
         vx: 0, vy: 0
     };
 
@@ -128,6 +126,11 @@ app.loader.load((loader, resources) => {
 
         character.vy = character.vy + 1;
         character.x += character.vx;   
+
+        let touchingGround = testCollision(
+            character.x,
+            character.y + tileSize * SCALE * 2 + 1
+        );
         
         if (character.vy > 0) {
             for (let i = 0; i < character.vy; i++) {
@@ -142,6 +145,8 @@ app.loader.load((loader, resources) => {
             }
         }
 
+        //Character Movement
+
         if (character.vy < 0) {
             character.y += character.vy;
         }
@@ -151,6 +156,23 @@ app.loader.load((loader, resources) => {
             character.vy = -10;
         }
 
+        if (kb.pressed.ArrowRight) {
+            character.vx = Math.min(10, character.vx + 2);
+        }
+
+        if (kb.pressed.ArrowLeft) {
+            character.vx = Math.max(-10, character.vx - 2);
+        }
+
+        // Stopping the character when not pressed
+
+        if (character.vx < 0) {
+            character.vx += 1; 
+        }
+
+        if (character.vx > 0) {
+            character.vx -= 1;
+        }
 
     });
 });
