@@ -120,7 +120,7 @@ app.loader.load((loader, resources) => {
         vx: 0, vy: 0
     };
 
-    app.ticker.add(() => {
+    app.ticker.add((time) => {
         player.x = character.x;
         player.y = character.y;
 
@@ -152,8 +152,8 @@ app.loader.load((loader, resources) => {
         }
 
 
-        if (kb.pressed.ArrowUp) {
-            character.vy = -10;
+        if (kb.pressed.ArrowUp && touchingGround) {
+            character.vy = -16;
         }
 
         if (kb.pressed.ArrowRight) {
