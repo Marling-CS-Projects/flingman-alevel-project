@@ -1,13 +1,17 @@
 PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
 
+//creating the Canvas
 const app = new PIXI.Application({
     width: 480,
     height: 320
 });
 
+
+//setting up constants we will use later
 const tileSize = 16;
 const SCALE = 2;
 
+//creating the map/laying out tiles
 let map = {
     width: 16,
     height: 10,
@@ -23,12 +27,14 @@ let map = {
         1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
         8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8,
     ],
+
+    //Creating the collision map, 0 won't collide with player, 1 will
     collision: [
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 4, 5, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -37,6 +43,13 @@ let map = {
     ]
 }
 
+/**
+ * Testing if the position is colliding with the world
+ * 
+ * @param {number} worldX 
+ * @param {number} worldY 
+ * @returns 1 if colliding with a block at location
+ */
 function testCollision(worldX, worldY) {
     console.log(worldX)
     console.log(worldY)
@@ -45,6 +58,7 @@ function testCollision(worldX, worldY) {
     return map.collision[mapY * map.width + mapX];
 }
 
+//Setting up keyboard interactivity 
 class Keyboard {
     constructor  () {
         this.pressed = {};
@@ -65,7 +79,7 @@ document.body.appendChild(app.view);
 app.view.setAttribute('tabindex', 0);
 
 
-
+// Loading in the assets
 app.loader.add('tileset', 'assets/tileset.png')
 app.loader.add('player_character', 'assets/player.png')
 app.loader.load((loader, resources) => {
@@ -73,7 +87,7 @@ app.loader.load((loader, resources) => {
     let kb = new Keyboard();
     kb.watchKeyboard(app.view);
 
-
+    //Splitting up the tileset in 'assets'
     let tileTextures = [];
     for (let i = 0; i < 7 * 11; i++) {
         let x = i % 7;  
@@ -84,7 +98,7 @@ app.loader.load((loader, resources) => {
         );
     }
 
-
+    //Creating the player
     const player = new PIXI.Sprite.from("assets/player.png");
     player.scale.x = SCALE;
     player.scale.y = SCALE;
@@ -94,8 +108,10 @@ app.loader.load((loader, resources) => {
     
 
 
-
+    //Laying out the sky in the background using tileTextures
     let sky = new PIXI.TilingSprite(tileTextures[74], map.width * tileSize, map.height * tileSize);
+
+    //Creating the background the entire size of the map and filling using tileTextures (see map at top)
     let background = new PIXI.Container();
     for (let y = 0; y < map.width; y++) {
         for (let x = 0; x < map .width; x++) {
@@ -106,38 +122,48 @@ app.loader.load((loader, resources) => {
             background.addChild(sprite);
         }
     }
+
+    //Setting the scale of the background/sky
     sky.scale.x = sky.scale.y = SCALE;
     background.scale.x = SCALE;
     background.scale.y = SCALE;
 
-
+    //Implementing the background, player and sky
     app.stage.addChild(sky);
     app.stage.addChild(background);
     app.stage.addChild(player);
 
+    //Placing the player in the world and setting up variables
     let character = {
         x: 0, y: 0,
         vx: 0, vy: 0
     };
 
+    //Adding a game loop
     app.ticker.add((time) => {
         player.x = character.x;
         player.y = character.y;
 
+        //Implementing gravity; player is always dragged down
         character.vy = character.vy + 1;
+
+        //Allowing horizontal movement
         character.x += character.vx;   
 
+        //Testing if the player is touching the ground using testCollision
         let touchingGround = testCollision(
             character.x,
             character.y + tileSize * SCALE * 2 + 1
         );
         
+        //Is the player colliding with anything?
         if (character.vy > 0) {
             for (let i = 0; i < character.vy; i++) {
+                //Places test coordinates to allow collision on different parts of the player sprite
                 let testX1 = character.x;
                 let testX2 = character.x + tileSize * SCALE -1;
                 let testY = character.y + tileSize * SCALE * 2
-                if (testCollision(testX1, testY) || testCollision(testX2, testY)) {
+                if (testCollision(testX1, testY) || testCollision(testX2, testY)) { //stopping the player if they are colliding
                     character.vy = 0;
                     break;  
                 }       
