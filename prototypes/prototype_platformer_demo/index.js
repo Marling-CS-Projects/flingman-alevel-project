@@ -1,15 +1,16 @@
-PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
+    //Disables pixelation of textures
+    PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
 
-//creating the Canvas
-const app = new PIXI.Application({
-    width: 480,
-    height: 320
-});
+    //creating the Canvas
+    const app = new PIXI.Application({
+        width: 480,
+        height: 320
+    });
 
 
-//setting up constants we will use later
-const tileSize = 16;
-const SCALE = 2;
+    //setting up constants we will use later
+    const tileSize = 16;
+    const SCALE = 2;
 
 //creating the map/laying out tiles
 let map = {
@@ -36,8 +37,8 @@ let map = {
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0,
         1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
         1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
     ]
@@ -51,8 +52,6 @@ let map = {
  * @returns 1 if colliding with a block at location
  */
 function testCollision(worldX, worldY) {
-    console.log(worldX)
-    console.log(worldY)
     let mapX = Math.floor(worldX / tileSize / SCALE);
     let mapY = Math.floor(worldY /tileSize /  SCALE);
     return map.collision[mapY * map.width + mapX];
@@ -104,14 +103,11 @@ app.loader.load((loader, resources) => {
     player.scale.y = SCALE;
 
 
-
-    
-
-
     //Laying out the sky in the background using tileTextures
     let sky = new PIXI.TilingSprite(tileTextures[74], map.width * tileSize, map.height * tileSize);
 
-    //Creating the background the entire size of the map and filling using tileTextures (see map at top)
+
+    //Creating the background the entire size of the map and filling using the array of tileTextures (see map at top)
     let background = new PIXI.Container();
     for (let y = 0; y < map.width; y++) {
         for (let x = 0; x < map .width; x++) {
