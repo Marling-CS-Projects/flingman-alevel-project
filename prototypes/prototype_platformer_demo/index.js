@@ -124,11 +124,8 @@ app.loader.load((loader, resources) => {
         vx: 0, vy: 0
     };
 
-    //pathing the enemy to the left from its starting position, then moving it to the right
-    function enemyPathing() {
-        while (foe.x < 432) {
-            foe.vx = -1;
-        }
+    if (enemy.x > 432) {
+        foe.vx = -1
     };
 
 
