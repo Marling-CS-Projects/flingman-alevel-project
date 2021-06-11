@@ -91,6 +91,7 @@ app.view.setAttribute('tabindex', 0);
 // Loading in the assets
 app.loader.add('tileset', 'assets/tileset.png')
 app.loader.add('player_character', 'assets/player.png')
+app.loader.add('enemy_model', 'assets/enemy.png')
 app.loader.load((loader, resources) => {
 
     let kb = new Keyboard();
@@ -111,6 +112,32 @@ app.loader.load((loader, resources) => {
     const player = new PIXI.Sprite.from("assets/player.png");
     player.scale.x = SCALE;
     player.scale.y = SCALE;
+
+    //Creating the enemy
+    const enemy = new PIXI.Sprite.from("assets/enemy.png");
+    enemy.scale.x = SCALE;
+    enemy.scale.y = SCALE;
+
+    //Placing the enemy in the world and setting up variables
+    let foe = {
+        x: 480, y: 384,
+        vx: 0, vy: 0
+    };
+
+    //pathing the enemy to the left from its starting position, then moving it to the right
+    function enemyPathing() {
+        while (foe.x < 432) {
+            foe.vx = -1;
+        }
+    };
+
+
+    
+
+   
+    
+
+    
 
 
     //Laying out the sky in the background using tileTextures
@@ -134,10 +161,12 @@ app.loader.load((loader, resources) => {
     background.scale.x = SCALE;
     background.scale.y = SCALE;
 
-    //Implementing the background, player and sky
+    //Implementing the background, player, enemy and sky
     app.stage.addChild(sky);
     app.stage.addChild(background);
     app.stage.addChild(player);
+    app.stage.addChild(enemy);
+    
 
     //Placing the player in the world and setting up variables
     let character = {
@@ -145,17 +174,26 @@ app.loader.load((loader, resources) => {
         vx: 0, vy: 0
     };
 
+    //Placing the enemy in the world and setting up variables
+
     //Adding a game loop
     app.ticker.add((time) => {
         player.x = character.x;
         player.y = character.y;
+        enemy.x = foe.x;
+        enemy.y = foe.y;
         
 
         //Implementing gravity; player is always dragged down
         character.vy = character.vy + 1;
+        
 
         //Allowing horizontal movement
         character.x += character.vx;   
+
+        foe.x += foe.vx;
+
+        
 
         //Testing if the player is touching the ground using testCollision
         let touchingGround = testCollision(
@@ -211,8 +249,6 @@ app.loader.load((loader, resources) => {
         if (character.vx > 0) {
             character.vx -= 1;
         }
-
-        
 
     });
 
