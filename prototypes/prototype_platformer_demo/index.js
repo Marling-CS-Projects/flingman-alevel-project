@@ -125,7 +125,7 @@ app.loader.load((loader, resources) => {
     };
 
     if (enemy.x > 432) {
-        foe.vx = -1
+        foe.vx = Math.min(10, foe.vx + 2);
     };
 
 
@@ -234,7 +234,7 @@ app.loader.load((loader, resources) => {
         }
 
         if (kb.pressed.ArrowDown) {
-            console.log(character.y);
+            console.log("enemy.x = ", enemy.x);
         }
 
         // Stopping the character when not pressed
