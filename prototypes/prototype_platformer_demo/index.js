@@ -124,8 +124,13 @@ app.loader.load((loader, resources) => {
         vx: 0, vy: 0
     };
 
-    if (enemy.x > 432) {
+    // Pathing the enemy between two points
+    while ((enemy.x > 432) && (enemy.x < 816)) {
         foe.vx = Math.min(10, foe.vx + 2);
+    };
+
+    while ((enemy.x > 816) && (enemy.x < 432)) {
+        foe.vx = Math.min(-10, foe.vx - 2 );
     };
 
 
