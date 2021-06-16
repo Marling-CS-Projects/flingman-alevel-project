@@ -129,7 +129,7 @@ app.loader.load((loader, resources) => {
         foe.vx = Math.min(10, foe.vx + 2);
     };
 
-    while ((enemy.x > 816) && (enemy.x < 432)) {
+    while ((enemy.x < 816) && (enemy.x > 432)) {
         foe.vx = Math.min(-10, foe.vx - 2 );
     };
 
