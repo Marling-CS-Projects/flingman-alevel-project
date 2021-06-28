@@ -199,9 +199,10 @@ app.loader.load((loader, resources) => {
             console.log("I reached 750!");
             foe.vx = 0;
             foe.vx = -5;
-        }
+        };
 
-        
+        // Collision with the enemy
+       
         
 
         
