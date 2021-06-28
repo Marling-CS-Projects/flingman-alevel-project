@@ -120,7 +120,7 @@ app.loader.load((loader, resources) => {
 
     //Placing the enemy in the world and setting up variables
     let foe = {
-        x: 439, y: 384,
+        x: 499, y: 384,
         vx: 0, vy: 0
     };
 
@@ -188,18 +188,20 @@ app.loader.load((loader, resources) => {
         foe.x += foe.vx;
 
         //Pathing the enemy
-        if(foe.x <= 440); {
-            foe.vx = 2; {
-                if (foe.x == 855); {
-                    foe.vx = foe.vx * -1
-                };
-            };
+        if (foe.x <= 500) {
+            console.log("I reached 500!");
+            foe.vx = 0;
+            foe.vx = +5;
+            
         };
 
-      
-        if(foe.x = 0); {
+        if (foe.x >= 750) {
+            console.log("I reached 750!");
             foe.vx = 0;
-        };
+            foe.vx = -5;
+        }
+
+        
         
 
         
