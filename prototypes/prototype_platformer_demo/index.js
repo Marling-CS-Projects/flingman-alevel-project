@@ -120,19 +120,11 @@ app.loader.load((loader, resources) => {
 
     //Placing the enemy in the world and setting up variables
     let foe = {
-        x: 480, y: 384,
+        x: 439, y: 384,
         vx: 0, vy: 0
     };
 
-    // Pathing the enemy between two points
-    while ((enemy.x > 432) && (enemy.x < 816)) {
-        foe.vx = Math.min(10, foe.vx + 2);
-    };
-
-    while ((enemy.x < 816) && (enemy.x > 432)) {
-        foe.vx = Math.min(-10, foe.vx - 2 );
-    };
-
+    
 
     
 
@@ -195,6 +187,21 @@ app.loader.load((loader, resources) => {
 
         foe.x += foe.vx;
 
+        //Pathing the enemy
+        if(foe.x <= 440); {
+            foe.vx = 2; {
+                if (foe.x == 855); {
+                    foe.vx = foe.vx * -1
+                };
+            };
+        };
+
+      
+        if(foe.x = 0); {
+            foe.vx = 0;
+        };
+        
+
         
 
         //Testing if the player is touching the ground using testCollision
@@ -239,7 +246,7 @@ app.loader.load((loader, resources) => {
         }
 
         if (kb.pressed.ArrowDown) {
-            console.log("enemy.x = ", enemy.x);
+            console.log("foe.x = ", foe.x);
         }
 
         // Stopping the character when not pressed
