@@ -130,7 +130,7 @@ app.loader.load((loader, resources) => {
     test.scale.y = SCALE;
 
     let testCharacter = {
-        x: 325, y: 384  ,
+        x: 325, y: 352,
         vx: 0, vy: 0
     };
     
@@ -211,18 +211,26 @@ app.loader.load((loader, resources) => {
             foe.vx = -5;
         };
 
-        // Collision with the enemy
+        // Collision with the test character, only works if the corners are exactly aligned, needs fixing
        
-        if (kb.pressed.ArrowRight) {
+        if ((character.x == testCharacter.x) && (character.y == testCharacter.y)) {
             console.log("stomp!");
             app.stage.removeChild(test);
 
 
 
         };
-        if (kb.pressed.ArrowLeft) {
-            console.log(testCharacter.x)
-        }
+
+        // Used to find values of positions for player/test character
+
+        if (kb.pressed.ArrowDown) {
+            console.log("player x = ", player.x);
+            console.log("player y = ", player.y);
+
+            console.log("test character x = ", testCharacter.x);
+            console.log("test character y = ", testCharacter.y);
+        };
+        
 
         
 
@@ -267,9 +275,7 @@ app.loader.load((loader, resources) => {
             character.vx = Math.max(-10, character.vx - 2);
         }
 
-        if (kb.pressed.ArrowDown) {
-            console.log("foe.x = ", foe.x);
-        }
+        
 
         // Stopping the character when not pressed
 
