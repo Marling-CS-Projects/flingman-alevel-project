@@ -125,7 +125,14 @@ app.loader.load((loader, resources) => {
     };
 
     
+    const test = new PIXI.Sprite.from("assets/test.png");
+    test.scale.x = SCALE;
+    test.scale.y = SCALE;
 
+    let testCharacter = {
+        x: 325, y: 384  ,
+        vx: 0, vy: 0
+    };
     
 
    
@@ -160,6 +167,7 @@ app.loader.load((loader, resources) => {
     app.stage.addChild(background);
     app.stage.addChild(player);
     app.stage.addChild(enemy);
+    app.stage.addChild(test);
     
 
     //Placing the player in the world and setting up variables
@@ -176,6 +184,8 @@ app.loader.load((loader, resources) => {
         player.y = character.y;
         enemy.x = foe.x;
         enemy.y = foe.y;
+        test.x = testCharacter.x;
+        test.y = testCharacter.y;
         
 
         //Implementing gravity; player is always dragged down
@@ -203,7 +213,16 @@ app.loader.load((loader, resources) => {
 
         // Collision with the enemy
        
-        
+        if (kb.pressed.ArrowRight) {
+            console.log("stomp!");
+            app.stage.removeChild(test);
+
+
+
+        };
+        if (kb.pressed.ArrowLeft) {
+            console.log(testCharacter.x)
+        }
 
         
 
