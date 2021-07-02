@@ -213,7 +213,7 @@ app.loader.load((loader, resources) => {
 
         // Collision with the test character, only works if the corners are exactly aligned, needs fixing
        
-        if ((character.x == testCharacter.x) && (character.y == testCharacter.y)) {
+        if ((((player.x + player.width) > testCharacter.x) && ((player.x < (testCharacter.x + character.width)) && ((player.y == testCharacter.y))))) {
             console.log("stomp!");
             app.stage.removeChild(test);
 
@@ -226,9 +226,13 @@ app.loader.load((loader, resources) => {
         if (kb.pressed.ArrowDown) {
             console.log("player x = ", player.x);
             console.log("player y = ", player.y);
+            console.log("player width = ", player.width);
+            console.log("player height = ", player.height);
 
             console.log("test character x = ", testCharacter.x);
             console.log("test character y = ", testCharacter.y);
+            console.log("test character width = ", testCharacter.width);
+            console.log("test character height = ", testCharacter.height);
         };
         
 
