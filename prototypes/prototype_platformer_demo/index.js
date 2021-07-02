@@ -213,7 +213,7 @@ app.loader.load((loader, resources) => {
 
         // Collision with the test character, only works if the corners are exactly aligned, needs fixing
        
-        if ((((player.x + player.width) > testCharacter.x) && ((player.x < (testCharacter.x + character.width)) && ((player.y == testCharacter.y))))) {
+        if (((player.x + player.width) > testCharacter.x) &&  ((player.y == testCharacter.y))) {
             console.log("stomp!");
             app.stage.removeChild(test);
 
