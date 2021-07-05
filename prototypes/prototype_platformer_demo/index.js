@@ -1,4 +1,4 @@
-    //Disables pixelation of textures
+   //Disables pixelation of textures
     PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
 
     //creating the Canvas
@@ -213,26 +213,28 @@ app.loader.load((loader, resources) => {
 
         // Collision with the test character, only works if the corners are exactly aligned, needs fixing
        
-        if (((player.x + player.width) > testCharacter.x) &&  ((player.y == testCharacter.y))) {
-            console.log("stomp!");
-            app.stage.removeChild(test);
+        var testCharacterLeftX = testCharacter.x;
 
+        var testCharacterRightX = (testCharacter.x + 16); 
 
+        if(((player.x > testCharacterLeftX) && (player.x <= testCharacterRightX) && (player.y >= (testCharacter.y - 32)))) {
+                console.log("stomp!");
+                app.stage.removeChild(test);
+    
+    
+    
+            };
 
-        };
 
         // Used to find values of positions for player/test character
 
         if (kb.pressed.ArrowDown) {
-            console.log("player x = ", player.x);
-            console.log("player y = ", player.y);
-            console.log("player width = ", player.width);
-            console.log("player height = ", player.height);
+            console.log("player X = ", player.x)
+            console.log("player y = ", player.y)
 
-            console.log("test character x = ", testCharacter.x);
+            console.log("test character left x = ", testCharacterLeftX);
+            console.log("test character right x = ", testCharacterRightX);
             console.log("test character y = ", testCharacter.y);
-            console.log("test character width = ", testCharacter.width);
-            console.log("test character height = ", testCharacter.height);
         };
         
 
