@@ -201,14 +201,14 @@ app.loader.load((loader, resources) => {
         if (foe.x <= 500) {
             console.log("I reached 500!");
             foe.vx = 0;
-            foe.vx = +5;
+            foe.vx = +2;
             
         };
 
         if (foe.x >= 750) {
             console.log("I reached 750!");
             foe.vx = 0;
-            foe.vx = -5;
+            foe.vx = -2;
         };
 
         // Collision with the test character, only works if the corners are exactly aligned, needs fixing
@@ -217,15 +217,26 @@ app.loader.load((loader, resources) => {
 
         var testCharacterRightX = (testCharacter.x + 16); 
 
-        if(((player.x > testCharacterLeftX) && (player.x <= testCharacterRightX) && (player.y >= (testCharacter.y - 32)))) {
-                console.log("stomp!");
-                app.stage.removeChild(test);
-    
-    
-    
-            };
+        
+        if (playerKillEnemy(player, enemy)) {
+            player.vy = + 5;
+            console.log("STOMP!");
+            app.stage.removeChild(enemy);
+        }
 
+        
 
+        
+
+        function playerKillEnemy(a, b) {
+            let aBox = a.getBounds();
+            let bBox = b.getBounds();
+    
+            return aBox.x + aBox.width > bBox.x &&
+                   aBox.x < bBox.x + bBox.width &&
+                   aBox.y + aBox.height == bBox.y + bBox.height &&
+                   aBox.y < bBox.y + bBox.height;
+        }
         // Used to find values of positions for player/test character
 
         if (kb.pressed.ArrowDown) {
