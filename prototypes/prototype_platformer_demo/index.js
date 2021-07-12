@@ -218,17 +218,18 @@ app.loader.load((loader, resources) => {
         var testCharacterRightX = (testCharacter.x + 16); 
 
         
-        if (playerKillEnemy(player, enemy)) {
-            player.vy = + 5;
-            console.log("STOMP!");
-            app.stage.removeChild(enemy);
-        }
+        if (playerContactEnemy(player, enemy)) {
+            character.vx = 0
+            foe.vx = 0
+            console.log("BUMP");
+            
+        };
 
         
 
         
 
-        function playerKillEnemy(a, b) {
+        function playerContactEnemy(a, b) {
             let aBox = a.getBounds();
             let bBox = b.getBounds();
     
