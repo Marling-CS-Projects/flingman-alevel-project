@@ -211,13 +211,8 @@ app.loader.load((loader, resources) => {
             foe.vx = -2;
         };
 
-        // Collision with the test character, only works if the corners are exactly aligned, needs fixing
-       
-        var testCharacterLeftX = testCharacter.x;
 
-        var testCharacterRightX = (testCharacter.x + 16); 
-
-        
+        //stopping the player and enemy if they are touching eachother(player is only slowed, not sure how to fix) 
         if (playerContactEnemy(player, enemy)) {
             character.vx = 0
             foe.vx = 0
@@ -237,6 +232,7 @@ app.loader.load((loader, resources) => {
                    aBox.x < bBox.x + bBox.width &&
                    aBox.y + aBox.height == bBox.y + bBox.height &&
                    aBox.y < bBox.y + bBox.height;
+                   aBox.y + bBox.height > 384;
         }
         // Used to find values of positions for player/test character
 
@@ -244,9 +240,7 @@ app.loader.load((loader, resources) => {
             console.log("player X = ", player.x)
             console.log("player y = ", player.y)
 
-            console.log("test character left x = ", testCharacterLeftX);
-            console.log("test character right x = ", testCharacterRightX);
-            console.log("test character y = ", testCharacter.y);
+            
         };
         
 
