@@ -187,6 +187,7 @@ app.loader.load((loader, resources) => {
         test.x = testCharacter.x;
         test.y = testCharacter.y;
         
+        
 
         //Implementing gravity; player is always dragged down
         character.vy = character.vy + 1;
@@ -197,33 +198,22 @@ app.loader.load((loader, resources) => {
 
         foe.x += foe.vx;
 
+
+
+        pathingEnemy();
+
+
+
         //Pathing the enemy
-        if (foe.x <= 500) {
-            console.log("I reached 500!");
-            foe.vx = 0;
-            foe.vx = +2;
+
+        while (playerContactEnemy(player, enemy)) {
             
-        };
-
-        if (foe.x >= 750) {
-            console.log("I reached 750!");
-            foe.vx = 0;
-            foe.vx = -2;
-        };
-
-
-        //stopping the player and enemy if they are touching eachother(player is only slowed, not sure how to fix) 
-        if (playerContactEnemy(player, enemy)) {
-            character.vx = 0
             foe.vx = 0
             console.log("BUMP");
-            
-        };
+ 
+            };
 
         
-
-        
-
         function playerContactEnemy(a, b) {
             let aBox = a.getBounds();
             let bBox = b.getBounds();
@@ -232,8 +222,38 @@ app.loader.load((loader, resources) => {
                    aBox.x < bBox.x + bBox.width &&
                    aBox.y + aBox.height == bBox.y + bBox.height &&
                    aBox.y < bBox.y + bBox.height;
+                   //should only return if the player is above the ground, not working???
                    aBox.y + bBox.height > 384;
         }
+
+        function pathingEnemy() {
+            if (foe.x <= 500) {
+                console.log("I reached 500!");
+                foe.vx = 0;
+                foe.vx = +2;
+
+
+            } else {
+
+             if (foe.x >= 750) {
+                console.log("I reached 750!");
+                foe.vx = 0;
+                foe.vx = -2;
+            }
+        }
+    
+
+    };
+            
+
+        //stopping the player and enemy if they are touching eachother(player is only slowed, not sure how to fix) 
+       
+
+        
+        
+
+        
+        
         // Used to find values of positions for player/test character
 
         if (kb.pressed.ArrowDown) {
