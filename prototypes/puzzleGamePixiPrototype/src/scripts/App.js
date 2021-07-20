@@ -16,7 +16,7 @@ export class App {
         this.loader.preload().then(() => this.start());
     }
     start() {
-        console.log("Game is starting!")
+        console.log("Game starting!")
     }
     
 }
