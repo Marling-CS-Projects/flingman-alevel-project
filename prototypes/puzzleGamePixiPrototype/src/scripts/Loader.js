@@ -1,4 +1,5 @@
-import {LoaderConfig} from "./LoaderConfig";
+import { LoaderConfig } from "./LoaderConfig";
+import { Globals } from "./Globals";
 
 export class Loader {
     //receive the pixi.js loader
@@ -18,7 +19,10 @@ export class Loader {
             }
             //loading all of the resources
             this.loader.load((loader, resources) => {
-                console.log("resources are loaded!", resources);
+                //setting all resources to global variables
+                Globals.resources = resources;
+
+                // console.log("resources are loaded!", resources);
                 //fulfills the promise
                 resolve();
             });
