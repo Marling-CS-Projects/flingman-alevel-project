@@ -22,7 +22,7 @@ export class Loader {
                 //setting all resources to global variables
                 Globals.resources = resources;
 
-                // console.log("resources are loaded!", resources);
+                 console.log("resources are loaded!");
                 //fulfills the promise
                 resolve();
             });
