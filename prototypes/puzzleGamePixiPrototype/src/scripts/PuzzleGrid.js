@@ -29,10 +29,24 @@ export class PuzzleGrid {
     //creating the puzzle pieces 
     createPuzzlePieces() {
         this.pieces = [];
-        // for every field in the puzzle grid, add a piece
+
+        let IDs = PuzzleGridConfig.map(field => field.id);
+        
+
+        // Iterate through the fields in PuzzleGridConfig.js and add random pieces to them
         PuzzleGridConfig.forEach(field => {
+
+            //Generates a random number from 0 to 8 (representing the different PuzzlePieces in the IDs array)
+            const random = Math.floor(Math.random() * IDs.length);  
+
+            //The id of the piece to be put in the grid will be found using the above random generator
+            const id = IDs[random];
+
+            //Prevents a piece with an id that is already in the new array from being chosen again
+            IDs = IDs.filter(item => item !== id)
+
             //The puzzle pieces will need an id and the field fetched from PuzzleGridConfig
-            const piece = new PuzzlePiece(field.id, field);
+            const piece = new PuzzlePiece(id, field);
             
             //adding the sprite of the piece to the container of the puzzle grid
             this.container.addChild(piece.sprite);
