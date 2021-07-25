@@ -20,6 +20,9 @@ export class PuzzleGrid {
         this.container.x = window.innerWidth / 2;
         this.container.y = window.innerHeight / 2;
 
+        //enables the children in this container (the puzzle pieces) to be sorted, lets us sort based on their zIndex (layer)
+        this.container.sortableChildren = true;
+
         //call the method to create the puzzle pieces
         this.createPuzzlePieces();
 
@@ -47,12 +50,44 @@ export class PuzzleGrid {
 
             //The puzzle pieces will need an id and the field fetched from PuzzleGridConfig
             const piece = new PuzzlePiece(id, field);
+
+            //custom event for when the piece is no longer being dragged, to enable piece swapping later
+            piece.on("dragEnd", () => this.onPieceDragEnd(piece));
             
             //adding the sprite of the piece to the container of the puzzle grid
             this.container.addChild(piece.sprite);
 
             //adding the pieces to the array
             this.pieces.push(piece);
-        })
+        });
+
     }
+
+    //when the piece is released, replace it with the piece it is overlapping
+    onPieceDragEnd(piece) {
+    
+        const pieceToReplace = this.pieces.find(item => 
+            item !== piece &&
+
+            //dragged piece should replace the piece if the centre is to the left of the right side
+            piece.sprite.x >= item.left &&
+            //dragged piece should replace the piece if the centre is to the right of the left side
+            piece.sprite.x <= item.right &&
+            //piece.centre should be below the top side
+            piece.sprite.y <= item.bottom &&
+            //piece.centre should be above the bottom side
+            piece.sprite.y >= item.top
+        );
+        
+        if (pieceToReplace) {
+            const replaceField = pieceToReplace.field;
+            pieceToReplace.setField(piece.field);
+            piece.setField(replaceField);
+
+        } else {
+            piece.resetPiece();
+        }
+
+    }
+
 }
