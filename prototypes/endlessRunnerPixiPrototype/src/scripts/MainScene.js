@@ -4,8 +4,7 @@ import * as PIXI from "pixi.js";
 //importing the global resources we created in Globals.js
 import { Globals } from "./Globals";
 
-//import the PuzzleGrid
-import { PuzzleGrid } from "./PuzzleGrid";
+
 
 
 

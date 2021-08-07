@@ -4,8 +4,7 @@ import * as PIXI from "pixi.js";
 import { Loader } from "./Loader";
 //Import the class for the scene(any game screen; main menu, background, game over etc) I made 
 import { MainScene } from "./MainScene";
-//import tween to be used in animation
-import TWEEN from "@tween/tween.js"
+
 
 // Creating a class used as the basis of the application that creates the canvas and automatically sizes it to the device window
 export class App {
@@ -22,6 +21,7 @@ export class App {
     //start the game
     start() {
         console.log(this.app.ticker);
+
         //setting up the scene to be displayed
         this.scene = new MainScene();
         //adding the scene to the 'Stage' container, which is auto included in the application by pixi
