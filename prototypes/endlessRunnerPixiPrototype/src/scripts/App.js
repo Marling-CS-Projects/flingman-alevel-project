@@ -1,5 +1,7 @@
 // Importing the pixi library
 import * as PIXI from "pixi.js";
+// Importing the TWEEN animation library
+import TWEEN from "@tweenjs/tween.js";
 // Import the custom loader I made
 import { Loader } from "./Loader";
 //Import the class for the scene(any game screen; main menu, background, game over etc) I made 
@@ -20,7 +22,11 @@ export class App {
     }
     //start the game
     start() {
-        console.log(this.app.ticker);
+        // adding a ticker to allow for frames to be updated
+        this.app.ticker.add(() => {
+        // calls the TWEEN (animation library) update so the animations are updated each frame
+         TWEEN.update();
+        });
 
         //setting up the scene to be displayed
         this.scene = new MainScene();
