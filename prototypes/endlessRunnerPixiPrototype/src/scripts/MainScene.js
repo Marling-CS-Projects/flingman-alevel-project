@@ -4,6 +4,8 @@ import * as PIXI from "pixi.js";
 //importing the global resources we created in Globals.js
 import { Globals } from "./Globals";
 
+//importing the Background class made in Background.js
+import { Background } from "./Background";
 
 
 
@@ -18,6 +20,10 @@ export class MainScene {
     }
     //creating the background
     createBackground() {
+        //creating a new class to contain all the 'Background' code
+        this.bg = new Background();
+        //adding background sprite as a child in the container of the main scene
+        this.container.addChild(this.bg.container);
     }
 
 } 
