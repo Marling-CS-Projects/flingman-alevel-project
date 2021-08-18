@@ -1,4 +1,5 @@
 import * as PIXI from "PIXI.js";
+import { Globals } from "./Globals";
 
 //exporting the Background class to be used in MainScene.js
 export class Background {
