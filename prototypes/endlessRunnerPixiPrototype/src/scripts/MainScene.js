@@ -26,4 +26,8 @@ export class MainScene {
         this.container.addChild(this.bg.container);
     }
 
+    update(dt) {
+        this.bg.update(dt);
+    }
+
 } 

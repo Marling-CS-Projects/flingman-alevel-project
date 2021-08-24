@@ -22,16 +22,21 @@ export class App {
     }
     //start the game
     start() {
-        // adding a ticker to allow for frames to be updated
-        this.app.ticker.add(() => {
-        // calls the TWEEN (animation library) update so the animations are updated each frame
-         TWEEN.update();
-        });
-
         //setting up the scene to be displayed
         this.scene = new MainScene();
+
         //adding the scene to the 'Stage' container, which is auto included in the application by pixi
         this.app.stage.addChild(this.scene.container);
+
+        // adding a ticker to allow for frames to be updated (dt = delta time, time passed since last redrawing of screen)
+        this.app.ticker.add(dt => {
+            // calls the TWEEN (animation library) update so the animations are updated each frame
+            // TWEEN.update();
+            this.scene.update(dt);
+
+
+        });
+        
 
 
         
