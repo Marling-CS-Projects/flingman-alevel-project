@@ -7,6 +7,9 @@ import { Globals } from "./Globals";
 //importing the Background class made in Background.js
 import { Background } from "./Background";
 
+//importing the Platforms class from Platforms.js
+import { Platforms } from "./Platforms"
+
 
 
 
@@ -15,15 +18,22 @@ export class MainScene {
     constructor() {
         this.container = new PIXI.Container();
         this.createBackground();
-        
+        this.createPlatforms();
 
     }
     //creating the background
     createBackground() {
         //creating a new class to contain all the 'Background' code
         this.bg = new Background();
-        //adding background sprite as a child in the container of the main scene
+        //adding the container from Background as a child of the main scene
         this.container.addChild(this.bg.container);
+    }
+
+    createPlatforms() {
+        //the platforms in the main scene are a new instance of the Platforms class
+        this.platforms = new Platforms();
+        //adding the container from Platforms as a child of the main scene
+        this.container.addChild(this.platforms.container);
     }
 
     update(dt) {

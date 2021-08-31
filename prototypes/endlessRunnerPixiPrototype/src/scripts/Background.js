@@ -5,7 +5,7 @@ import { Globals } from "./Globals";
 export class Background {
     constructor() {
         //the speed of the background
-        this.speed = 10;
+        this.speed = 2;
         //setting the background as a 'container' using PIXI's container 
         this.container = new PIXI.Container();
         this.createSprites();
