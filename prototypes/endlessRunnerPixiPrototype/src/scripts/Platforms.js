@@ -15,8 +15,8 @@ export class Platforms {
                 max: 6
             },
             cols: {
-                min: 4,
-                max: 8
+                min: 3,
+                max: 9
             },
             offset: {
                 min: 60,
@@ -25,7 +25,7 @@ export class Platforms {
          };
 
 
-        //create a platforms, with 4 rows and 6 columns of tiles, at x 200
+        //create a platform, with 4 rows and 6 columns of tiles, at x 200
         this.createPlatform({
             rows: 4,
             cols:6,
@@ -33,6 +33,7 @@ export class Platforms {
 
         });
     }
+
     //getting random data for the platforms to be created
     get randomData() {
         let data = { rows: 0, cols: 0 , x: 0 };
@@ -43,11 +44,13 @@ export class Platforms {
         //generate the random properties of the new platofrm and updates the 'data' properties for each one
         const offset = this.ranges.offset.min + Math.round(Math.random() * (this.ranges.offset.max - this.ranges.offset.min));
 
+        data.x = this.current.right + offset;
+
         data.cols = this.ranges.cols.min + Math.round(Math.random() * (this.ranges.cols.max - this.ranges.cols.min));
 
         data.rows = this.ranges.rows.min + Math.round(Math.random() * (this.ranges.rows.max - this.ranges.rows.min));
 
-        data.x = this.current.right + offset;
+        
 
         //return the generated random data
         return data;
@@ -56,11 +59,14 @@ export class Platforms {
 
     createPlatform(data) {
         //the created platforms is an instance of the Platform class with parameters of rows, columns, and x value
-        const platform = new Platform(data.rows, data.col, data.x);
+        const platform = new Platform(data.rows, data.cols, data.x);
+
         //adds the platform to the container of Platforms, which is later added to the container of Main scene
         this.container.addChild(platform.container);
+
         //pushes the created platform to the array on line 7
         this.platforms.push(platform);
+        
         //'current' property contains the current platform
         this.current = platform;
 

@@ -42,9 +42,9 @@ export class Platform {
     createContainer(x) {
         this.container = new PIXI.Container();
         this.container.x = x;
-        
+
         //the height of the platform will be the number of rows multiplied by tilesize subtracted from the height of the screen
-        this.container.y = window.innerHeight - this.rows * TileSize   
+        this.container.y = window.innerHeight - this.rows * TileSize;   
     }
 
     createTiles() {
@@ -56,6 +56,7 @@ export class Platform {
 
         }
     }
+
     //method to create each individual tile
     createTile(row, col) {
         // if the row being iterated is the top, then each tile should be the grassy block, if not then the dirt block
