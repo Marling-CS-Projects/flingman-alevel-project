@@ -8,14 +8,18 @@ const TileSize = 64;
 //exporting the Platforms class to be used in MainScene to implement them into the game
 export class Platform {
     constructor(rows, cols, x) {
+        //offset value for moving platforms
+        this.dx = -5;
+
         this.rows = rows;
         this.cols = cols;
+    
 
         //defining aspects of the platform
         this.width = cols * TileSize;
 
         this.height = rows * TileSize;
-
+        //create the platform as a container, and specify its x position
         this.createContainer(x);
         this.createTiles();
         
@@ -70,4 +74,16 @@ export class Platform {
         //the y position of the tile is its row number multiplied by the height of the tile (64 pixels)
         tile.y = row * tile.height;
     }
+
+    //the method to handle the movement of the platforms
+    move(){
+        this.container.x += this.dx;
+
+        //if the platform goes past the left side of the screen, declare it as hidden
+        if (this.right < 0) {
+            this.container.emit("hidden");
+        }
+    }
+
+
 }

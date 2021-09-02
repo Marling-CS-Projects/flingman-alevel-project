@@ -70,6 +70,14 @@ export class Platforms {
         //'current' property contains the current platform
         this.current = platform;
 
+        //filters out any hidden platforms from the platform array
+        platform.container.once("hidden", () => {
+            this.platforms = this.platforms.filter(item => item !== platform);
+            //remove platforms that are no longer visible, that have been removed from the array
+            platform.container.destroy();
+        
+        });
+
 
     }
 
@@ -79,6 +87,11 @@ export class Platforms {
         if (this.current.right < window.innerWidth) {
             this.createPlatform(this.randomData);
         }
+
+        //iterate over all the platforms in the platforms array to get all platforms to move (Creating illusion that player is running)
+        this.platforms.forEach(platform => {
+            platform.move();
+        })
 
     }
 }
