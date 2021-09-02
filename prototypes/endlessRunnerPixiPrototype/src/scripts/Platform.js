@@ -7,19 +7,42 @@ const TileSize = 64;
 
 //exporting the Platforms class to be used in MainScene to implement them into the game
 export class Platform {
-    constructor(rows, col, x) {
+    constructor(rows, cols, x) {
         this.rows = rows;
-        this.col = col;
+        this.cols = cols;
+
+        //defining aspects of the platform
+        this.width = cols * TileSize;
+
+        this.height = rows * TileSize;
 
         this.createContainer(x);
         this.createTiles();
         
         
     }
+
+    //get the different positional values of the platform
+    get left() {
+        return this.container.x;
+    }
+
+    get right() {
+        return this.left + this.width;
+    }
+
+    get top() {
+        this.container.y;
+    }
+
+    get bottom() {
+        this.top + this.height;
+    }
     
     createContainer(x) {
         this.container = new PIXI.Container();
         this.container.x = x;
+        
         //the height of the platform will be the number of rows multiplied by tilesize subtracted from the height of the screen
         this.container.y = window.innerHeight - this.rows * TileSize   
     }
@@ -27,7 +50,7 @@ export class Platform {
     createTiles() {
         //creating the tiles of the platform using iteration; for every row needed in the platform the tiles will be created
         for (let row = 0; row < this.rows; row++) {
-            for (let col = 0; col < this.col; col++) {
+            for (let col = 0; col < this.cols; col++) {
                 this.createTile(row, col);
             }
 

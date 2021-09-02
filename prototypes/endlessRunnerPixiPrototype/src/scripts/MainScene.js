@@ -36,8 +36,13 @@ export class MainScene {
         this.container.addChild(this.platforms.container);
     }
 
+    //called every frame
     update(dt) {
+        //keeps the background moving every frame
         this.bg.update(dt);
+
+        //update position of the platforms
+        this.platforms.update(dt);
     }
 
 } 
