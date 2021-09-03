@@ -46,11 +46,14 @@ export class MainScene {
 
     //called every frame
     update(dt) {
-        //keeps the background moving every frame
+        //calls the update method from Background.js
         this.bg.update(dt);
 
-        //update position of the platforms
+        //calls the update method from Platforms.js
         this.platforms.update(dt);
+        
+        //calls the update method from Hero.js
+        this.hero.update(dt); 
     }
 
 } 
