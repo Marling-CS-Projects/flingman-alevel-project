@@ -26,6 +26,42 @@ export class Platform {
         
     }
 
+    //check if the hero is colliding with the platform
+    checkCollision(hero) {
+
+        //if the hero is colliding with the top (call the method to check, using hero as a parameter)
+        if (this.isCollideTop(hero)) {
+
+            //then the hero should stay on top of THIS platform (call method)
+            hero.stayOnPlatform(this);
+            
+        } else {
+
+            //if the hero's current platform is this platform, and the hero isn't colliding with it, set the hero to not have a platform
+            if (hero.platform === this) {
+                hero.platform = null;
+            }
+        }
+    }
+
+    //checking if the player is touching the top of the platform
+    isCollideTop(hero) {
+        //return that the hero IS colliding with the platform if......
+        // if the hero's right side is on or in front of the left side of the platform
+        return hero.right >= this.left &&
+
+        // if the hero's left side is on or behind the right side of the platform
+        hero.left <= this.right &&
+
+        // if the hero's lower side is below or equal to the top side of the platform
+        hero.bottom <= this.top &&
+
+        // if the hero's lower side will be higher or equal to the platform in the next frame
+        hero.nextFrameBottom >= this.top;
+
+
+    }
+
     //get the different positional values of the platform
     get left() {
         return this.container.x;
@@ -36,11 +72,11 @@ export class Platform {
     }
 
     get top() {
-        this.container.y;
+        return this.container.y;
     }
 
     get bottom() {
-        this.top + this.height;
+        return this.top + this.height;
     }
     
     createContainer(x) {

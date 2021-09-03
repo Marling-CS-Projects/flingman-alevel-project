@@ -81,6 +81,17 @@ export class Platforms {
 
     }
 
+    //method to check if the hero is colliding with any platform currently visible
+    checkCollision(hero) {
+        //iterate over the array of all visible platforms
+        this.platforms.forEach(platform => {
+            platform.checkCollision(hero);  
+            
+        });
+
+
+    }
+
     //new platform must be created each time we see a new platform
     update(dt) {
         //if the current platform is fully visible, create a new platform

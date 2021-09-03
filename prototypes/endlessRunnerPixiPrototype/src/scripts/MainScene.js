@@ -49,11 +49,16 @@ export class MainScene {
         //calls the update method from Background.js
         this.bg.update(dt);
 
+        //each frame, check if the hero is colliding with a platform
+        this.platforms.checkCollision(this.hero);
+
         //calls the update method from Platforms.js
         this.platforms.update(dt);
         
         //calls the update method from Hero.js
         this.hero.update(dt); 
+
+
     }
 
 } 
