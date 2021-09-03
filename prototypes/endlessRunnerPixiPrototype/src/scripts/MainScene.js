@@ -8,7 +8,9 @@ import { Globals } from "./Globals";
 import { Background } from "./Background";
 
 //importing the Platforms class from Platforms.js
-import { Platforms } from "./Platforms"
+import { Platforms } from "./Platforms";
+
+import { Hero } from "./Hero";
 
 
 
@@ -19,6 +21,7 @@ export class MainScene {
         this.container = new PIXI.Container();
         this.createBackground();
         this.createPlatforms();
+        this.createHero();
 
     }
     //creating the background
@@ -34,6 +37,11 @@ export class MainScene {
         this.platforms = new Platforms();
         //adding the container from Platforms as a child of the main scene
         this.container.addChild(this.platforms.container);
+    }
+
+    createHero() {
+        this.hero = new Hero();
+        this.container.addChild(this.hero.sprite);
     }
 
     //called every frame
