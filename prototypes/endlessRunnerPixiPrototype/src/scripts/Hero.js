@@ -66,6 +66,11 @@ export class Hero {
         this.sprite.y = platform.top - this.sprite.height;
     }
 
+    //if the hero is colliding with a platform's left, set its x to the left of the platform in the next frame, - width as the anchor point for the hero sprite is the top left
+    moveByPlatform(platform) {
+        this.sprite.x = platform.nextFrameLeft - this.sprite.width;
+    }
+
     //constatantly updates each frame to check if hero is on a platform
     update() {
         //if hero isn't on a platform, increase the y velocity 

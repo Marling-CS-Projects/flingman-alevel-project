@@ -21,6 +21,7 @@ export class Platform {
         this.height = rows * TileSize;
         //create the platform as a container, and specify its x position
         this.createContainer(x);
+        
         this.createTiles();
         
         
@@ -39,13 +40,22 @@ export class Platform {
 
             //if the hero's current platform is this platform, and the hero isn't colliding with it, set the hero to not have a platform
             if (hero.platform === this) {
+
                 hero.platform = null;
+            }
+
+            //if the hero is colliding with the left of a platform....
+            if (this.isCollideLeft(hero)) {
+            
+                //then the hero should move with it off the screen
+                hero.moveByPlatform(this);
             }
         }
     }
 
     //checking if the player is touching the top of the platform
     isCollideTop(hero) {
+
         //return that the hero IS colliding with the platform if......
         // if the hero's right side is on or in front of the left side of the platform
         return hero.right >= this.left &&
@@ -59,6 +69,18 @@ export class Platform {
         // if the hero's lower side will be higher or equal to the platform in the next frame
         hero.nextFrameBottom >= this.top;
 
+    }
+
+    //checking if the hero is colliding with the side of the platform
+    isCollideLeft(hero) {
+
+        return hero.bottom >= this.top &&
+
+        hero.top <= this.bottom &&
+
+        hero.right <= this.left && 
+
+        hero.right >= this.nextFrameLeft;
 
     }
 
@@ -77,6 +99,11 @@ export class Platform {
 
     get bottom() {
         return this.top + this.height;
+    }
+
+    //get the left position, taking into account where it will be next frame
+    get nextFrameLeft() {
+        return this.left + this.dx;
     }
     
     createContainer(x) {
