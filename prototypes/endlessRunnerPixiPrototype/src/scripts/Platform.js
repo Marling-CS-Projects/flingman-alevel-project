@@ -12,7 +12,7 @@ export class Platform {
     constructor(rows, cols, x) {
         //creating an array for the collectible diamonds
         this.diamonds = [];
-        this.diamondsOffsetMin = 100;
+        this.diamondsOffsetMin = 64;
         this.diamondsOffsetMax = 200;
 
         //offset value for moving platforms

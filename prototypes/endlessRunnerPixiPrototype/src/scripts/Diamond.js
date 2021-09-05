@@ -40,13 +40,13 @@ export class Diamond {
 
     //checking if the hero is overlapping the diamond sprite
     isOverlap(hero) {
-        return hero.bottom >= this.top && 
+        return hero.bottom  >= this.top && 
             hero.top <= this.bottom &&
             hero.right >= this.left &&
             hero.left <= this.right
 
     }
-    
+
 
     get left() {
         return this.sprite.x + this.sprite.parent.x;
@@ -61,7 +61,7 @@ export class Diamond {
     }
 
     get bottom() {
-        return this.sprite.top + this.sprite.height;
+        return this.top + this.sprite.height;
     }
 }
 
