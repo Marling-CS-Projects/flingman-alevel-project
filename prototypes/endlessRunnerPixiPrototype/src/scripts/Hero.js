@@ -7,6 +7,8 @@ export class Hero {
         //the speed along the y axis
         this.dy = 0;
 
+        this.jumpIndex = 0;
+
         //what platform is the hero standing on?
         this.platform = null;
         
@@ -29,6 +31,21 @@ export class Hero {
         this.sprite.play();
 
 
+    }   
+
+    //star the hero's jump
+    startJump() {
+        //only let the jump happen if the hero is on a platform, OR if the jump index is 1 (enables a double jump if the hero has previously jumped)
+        if (this.platform || this.jumpIndex === 1) {
+
+            ++this.jumpIndex;
+
+            //when the hero jumps, they are no longer assigned to the platform
+            this.platform = null;
+
+            //set their y speed to go up, gravity will take effect when they are off the platform
+            this.dy = -18;
+        }
     }
 
     //getters for the different locational properties of the hero sprite
@@ -61,6 +78,9 @@ export class Hero {
 
         //set the y speed to 0
         this.dy = 0;
+
+        //reset the hero's jump index
+        this.jumpIndex = 0;
 
         //set the hero to be positioned on the top of the platform (anchor point of sprite is top left, so subtract height to place it exactly on top)
         this.sprite.y = platform.top - this.sprite.height;

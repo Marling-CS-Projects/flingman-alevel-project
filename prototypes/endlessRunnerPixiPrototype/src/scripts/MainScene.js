@@ -42,6 +42,18 @@ export class MainScene {
     createHero() {
         this.hero = new Hero();
         this.container.addChild(this.hero.sprite);
+
+        //setting the MainScene container to be interactive
+        this.container.interactive = true;
+
+        //when the mouse is clicked....
+        this.container.on("pointerdown", () => {
+            //call the method to for the hero to jump
+            this.hero.startJump();
+
+        });
+
+
     }
 
     //called every frame

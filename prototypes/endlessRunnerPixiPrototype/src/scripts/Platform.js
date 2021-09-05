@@ -1,6 +1,8 @@
-import * as PIXI from "pixi.js"
+import * as PIXI from "pixi.js";
 
-import { Globals } from "./Globals"
+import { Globals } from "./Globals";
+
+import { Diamond } from "./Diamond";
 
 //the tiles are 64 pixels by 64 pixels
 const TileSize = 64;
@@ -8,6 +10,11 @@ const TileSize = 64;
 //exporting the Platforms class to be used in MainScene to implement them into the game
 export class Platform {
     constructor(rows, cols, x) {
+        //creating an array for the collectible diamonds
+        this.diamonds = [];
+        this.diamondsOffsetMin = 100;
+        this.diamondsOffsetMax = 200;
+
         //offset value for moving platforms
         this.dx = -5;
 
@@ -21,10 +28,33 @@ export class Platform {
         this.height = rows * TileSize;
         //create the platform as a container, and specify its x position
         this.createContainer(x);
-        
+
         this.createTiles();
+
+        this.createDiamonds();
         
         
+    }
+
+    createDiamonds() {
+        //creating a random value for the poition of the diamonds on the y axis
+        const y = this.diamondsOffsetMin + Math.random() * (this.diamondsOffsetMax - this.diamondsOffsetMin);
+        //iterate over every tile on a platform; each tile has a 40% chance to spawn a diamond
+        for (let i = 0; i < this.cols; i++) {
+            //gives a 40% chance of it happening
+            if (Math.random() < 0.4) {
+                //the tiles are 64 pixels, so multiply tilesize by the column number to get the coordinate of the tile  
+                //the y value is negative because a positive value would place diamonds below the platform, + y = down, - y = up
+                const diamond = new Diamond(64 * i, -y);
+
+                //add the diamond sprite to the container
+                this.container.addChild(diamond.sprite);
+
+                //push the created diamond to the array of diamonds
+                this.diamonds.push(diamond)
+            }
+
+        }
     }
 
     //check if the hero is colliding with the platform
