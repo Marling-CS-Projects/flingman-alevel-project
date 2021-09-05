@@ -42,7 +42,7 @@ export class Platform {
         //iterate over every tile on a platform; each tile has a 40% chance to spawn a diamond
         for (let i = 0; i < this.cols; i++) {
             //gives a 40% chance of it happening
-            if (Math.random() < 0.4) {
+            if (Math.random() < 0.3) {
                 //the tiles are 64 pixels, so multiply tilesize by the column number to get the coordinate of the tile  
                 //the y value is negative because a positive value would place diamonds below the platform, + y = down, - y = up
                 const diamond = new Diamond(64 * i, -y);
@@ -59,6 +59,10 @@ export class Platform {
 
     //check if the hero is colliding with the platform
     checkCollision(hero) {
+
+        //iterate over the array of diamonds, and check if the hero is colliding with any of them
+        this.diamonds.forEach(diamond => diamond.checkCollision(hero));
+        
 
         //if the hero is colliding with the top (call the method to check, using hero as a parameter)
         if (this.isCollideTop(hero)) {

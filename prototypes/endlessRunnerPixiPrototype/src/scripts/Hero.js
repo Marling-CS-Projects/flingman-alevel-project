@@ -45,6 +45,8 @@ export class Hero {
 
             //set their y speed to go up, gravity will take effect when they are off the platform
             this.dy = -18;
+
+            console.log("whee!");
         }
     }
 
