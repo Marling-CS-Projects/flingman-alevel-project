@@ -12,6 +12,12 @@ import { Platforms } from "./Platforms";
 
 import { Hero } from "./Hero";
 
+import { DiamondCounter } from "./DiamondCounter";
+
+import { FinalScene } from "./FinalScene";
+
+
+
 
 
 
@@ -22,6 +28,7 @@ export class MainScene {
         this.createBackground();
         this.createPlatforms();
         this.createHero();
+        this.createInterface();
 
     }
     //creating the background
@@ -53,7 +60,36 @@ export class MainScene {
 
         });
 
+        this.hero.sprite.once("die", () => {
+            Globals.scene.start(new FinalScene());
+        });
+            
 
+
+    }
+
+    createInterface() {
+        //creating a label to show how many diamonds are collected by adding the DiamondCounter class
+        this.labelCollected = new DiamondCounter();
+
+        //add the diamond counter to the container of the main scene as a child
+        this.container.addChild(this.labelCollected.view);
+
+        //when the "collect" event from Hero.js is emitted, the label gets rendered with its updated value displayed
+        this.hero.sprite.on("collect", () => {
+            this.labelCollected.render(this.hero.diamondsCollected);
+
+            // Assess if the platforms should speed up and apply here
+
+            if (this.hero.diamondsCollected === 5 || this.hero.diamondsCollected === 10 || this.hero.diamondsCollected === 15) {
+            console.log("speedUp!");
+                
+            this.platforms.increasePlatformSpeed();
+           
+            
+            
+            }
+        });
     }
 
     //called every frame
@@ -69,6 +105,10 @@ export class MainScene {
         
         //calls the update method from Hero.js
         this.hero.update(dt); 
+
+        
+
+         
 
 
     }

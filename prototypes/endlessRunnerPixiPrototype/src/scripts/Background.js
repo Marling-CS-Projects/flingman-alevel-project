@@ -6,7 +6,7 @@ export class Background {
     constructor() {
         //the speed of the background
         this.speed = 2;
-        //setting the background as a 'container' using PIXI's container 
+        //setting the background as a 'container' using PIXI's container functionality
         this.container = new PIXI.Container();
         this.createSprites();
     }

@@ -2,11 +2,17 @@ import * as PIXI from "pixi.js"
 
 import { Globals } from "./Globals"
 
+import { Platform } from "./Platform"
+import { Platforms } from "./Platforms";
+
 export class Hero {
     constructor() {
+
+        this.diamondsCollected = 0;
         //the speed along the y axis
         this.dy = 0;
 
+        //the index for tracking if the hero has jumped
         this.jumpIndex = 0;
 
         //what platform is the hero standing on?
@@ -17,6 +23,7 @@ export class Hero {
             Globals.resources["walk1"].texture,
             Globals.resources["walk2"].texture
         ]);
+
         //sprite is in centre
         this.sprite.x = 100;
         this.sprite.y = 100;
@@ -25,13 +32,15 @@ export class Hero {
         this.sprite.loop = true;
 
         //the speed at which the frames should switch
-        this.sprite.animationSpeed = 0.1;
+        this.sprite.animationSpeed = 0.15;
 
         //begin the animation
         this.sprite.play();
 
 
     }   
+
+    
 
     //star the hero's jump
     startJump() {
@@ -46,7 +55,9 @@ export class Hero {
             //set their y speed to go up, gravity will take effect when they are off the platform
             this.dy = -18;
 
-            console.log("whee!");
+            
+
+            
         }
     }
 
@@ -89,8 +100,26 @@ export class Hero {
     }
 
     //if the hero is colliding with a platform's left, set its x to the left of the platform in the next frame, - width as the anchor point for the hero sprite is the top left
-    moveByPlatform(platform) {
+    moveWithPlatform(platform) {
         this.sprite.x = platform.nextFrameLeft - this.sprite.width;
+    }
+
+    //when the hero collects a diamond...
+    collectDiamond() {
+
+        //increase the value of diamondsCollected by 1
+        ++this.diamondsCollected;
+
+        //emit the event for collecting a diamond
+        this.sprite.emit("collect");
+
+    
+
+
+        
+
+       
+
     }
 
     //constatantly updates each frame to check if hero is on a platform
@@ -100,5 +129,12 @@ export class Hero {
             ++this.dy;
             this.sprite.y += this.dy;
         }
+
+        if (this.sprite.y > window.innerHeight) {
+            this.sprite.emit("die");
+        }
+
+        
     }
+
 }

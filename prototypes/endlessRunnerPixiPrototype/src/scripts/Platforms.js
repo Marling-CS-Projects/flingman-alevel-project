@@ -15,12 +15,12 @@ export class Platforms {
                 max: 6
             },
             cols: {
-                min: 3,
-                max: 9
+                min: 2,
+                max: 8
             },
             offset: {
-                min: 60,
-                max: 200,
+                min: 128,
+                max: 260,
             }
          };
 
@@ -28,8 +28,8 @@ export class Platforms {
         //create a platform, with 4 rows and 6 columns of tiles, at x 200
         this.createPlatform({
             rows: 4,
-            cols:6,
-            x:200
+            cols:12,
+            x: 0
 
         });
     }
@@ -81,6 +81,13 @@ export class Platforms {
 
     }
 
+    increasePlatformSpeed() {
+        console.log("increase platforms speed!");
+        this.platforms.forEach(platform => {
+            platform.speedUp();
+        })
+    }
+
     //method to check if the hero is colliding with any platform currently visible
     checkCollision(hero) {
         //iterate over the array of all visible platforms
@@ -91,6 +98,8 @@ export class Platforms {
 
 
     }
+
+    
 
     //new platform must be created each time we see a new platform
     update(dt) {

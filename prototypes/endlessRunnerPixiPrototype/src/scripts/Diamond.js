@@ -3,6 +3,7 @@ import * as PIXI from "pixi.js";
 
 //import the Global variables
 import { Globals } from "./Globals";
+import { Platform } from "./Platform";
 
 //export the diamond class to be used in Platform.js
 export class Diamond {
@@ -25,13 +26,21 @@ export class Diamond {
         //if the diamond sprite is overlapping the hero sprite...
         if (this.isOverlap(hero)) {
 
-            console.log("diamond collected!");
+            //testing purposes 
+            
+
+            //call the method to display that a diamond is collecte
+            hero.collectDiamond();
+
+            
             
             //destroy the visible sprite
             this.sprite.destroy();
 
             //delete it from the array, it no longer exists
             this.sprite = null;
+
+            
 
             
         }

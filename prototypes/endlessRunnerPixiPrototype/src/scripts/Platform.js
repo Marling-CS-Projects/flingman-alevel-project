@@ -7,16 +7,21 @@ import { Diamond } from "./Diamond";
 //the tiles are 64 pixels by 64 pixels
 const TileSize = 64;
 
+
+
 //exporting the Platforms class to be used in MainScene to implement them into the game
 export class Platform {
-    constructor(rows, cols, x) {
+    constructor(rows, cols, x, ) {
         //creating an array for the collectible diamonds
         this.diamonds = [];
         this.diamondsOffsetMin = 64;
-        this.diamondsOffsetMax = 200;
+        this.diamondsOffsetMax = 192;
+
+        // initial speed of platform
+        this.dx = -5;
 
         //offset value for moving platforms
-        this.dx = -5;
+        
 
         this.rows = rows;
         this.cols = cols;
@@ -51,11 +56,18 @@ export class Platform {
                 this.container.addChild(diamond.sprite);
 
                 //push the created diamond to the array of diamonds
-                this.diamonds.push(diamond)
+                this.diamonds.push(diamond);
             }
 
         }
     }
+
+    
+    speedUp() {
+        this.dx = (this.dx - 1);
+        console.log("platform speed = ", this.dx);
+    }
+    
 
     //check if the hero is colliding with the platform
     checkCollision(hero) {
@@ -82,7 +94,7 @@ export class Platform {
             if (this.isCollideLeft(hero)) {
             
                 //then the hero should move with it off the screen
-                hero.moveByPlatform(this);
+                hero.moveWithPlatform(this);
             }
         }
     }
@@ -172,6 +184,11 @@ export class Platform {
         tile.y = row * tile.height;
     }
 
+    
+   
+    
+    
+
     //the method to handle the movement of the platforms
     move(){
         this.container.x += this.dx;
@@ -180,7 +197,13 @@ export class Platform {
         if (this.right < 0) {
             this.container.emit("hidden");
         }
+
+        
     }
+
+    
+
+    
 
 
 }
